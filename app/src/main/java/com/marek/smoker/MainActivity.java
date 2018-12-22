@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
             @Override
             public void onClick(View v) {
                 deleteAll();
+                startActivity(new Intent(MainActivity.this, MainActivity.class));
             }
         });
 
