@@ -26,9 +26,10 @@ class PacketAdapter extends RecyclerView.Adapter<PacketAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(PacketAdapter.ViewHolder holder, int position) {
 
-        holder.eventName.setText(packets.get(position).getPacketBrand());
-        holder.eventDate.setText(packets.get(position).getPacketDate());
-        holder.eventDistance.setText(packets.get(position).getPacketPrice());
+        holder.packetBrand.setText(packets.get(position).getPacketBrand());
+        holder.packetDate.setText(packets.get(position).getPacketDate());
+        holder.packetPrice.setText(packets.get(position).getPacketPrice());
+        holder.packetAvailable.setText(packets.get(position).getPacketAvailable());
 
     }
 
@@ -38,15 +39,17 @@ class PacketAdapter extends RecyclerView.Adapter<PacketAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView eventName;
-        public TextView eventDate;
-        public TextView eventDistance;
+        public TextView packetBrand;
+        public TextView packetDate;
+        public TextView packetPrice;
+        public TextView packetAvailable;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            eventName = itemView.findViewById(R.id.event_name);
-            eventDate = itemView.findViewById(R.id.event_date);
-            eventDistance = itemView.findViewById(R.id.event_distance);
+            packetBrand = itemView.findViewById(R.id.packet_brand);
+            packetDate = itemView.findViewById(R.id.packet_date);
+            packetPrice = itemView.findViewById(R.id.packet_price);
+            packetAvailable = itemView.findViewById(R.id.packet_available);
         }
     }
 }

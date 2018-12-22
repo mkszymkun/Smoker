@@ -21,9 +21,9 @@ public class Packet {
     private String packetPrice;
 
     @ColumnInfo(name = "packet_available")
-    private int packetAvailable;
+    private String packetAvailable;
 
-    public Packet(String packetBrand, String packetDate, String packetPrice, int packetAvailable) {
+    public Packet(String packetBrand, String packetDate, String packetPrice, String packetAvailable) {
         this.packetBrand = packetBrand;
         this.packetDate = packetDate;
         this.packetPrice = packetPrice;
@@ -62,11 +62,11 @@ public class Packet {
         this.packetPrice = packetPrice;
     }
 
-    public int getPacketAvailable() {
+    public String getPacketAvailable() {
         return packetAvailable;
     }
 
-    public void setPacketAvailable(int packetAvailable) {
+    public void setPacketAvailable(String packetAvailable) {
         this.packetAvailable = packetAvailable;
     }
 }

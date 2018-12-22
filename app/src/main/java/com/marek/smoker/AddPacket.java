@@ -47,7 +47,7 @@ public class AddPacket extends AppCompatActivity {
 
     private void saveEvent() {
 
-        Packet packet = new Packet(packetName.getText().toString(), packetDate, packetPrice.getText().toString(), 20);
+        Packet packet = new Packet(packetName.getText().toString(), packetDate, packetPrice.getText().toString(), "20");
         PacketDao packetDao = AppDatabase.getDatabase(getApplicationContext()).packetDao();
         packetDao.insertAll(packet);
     }
