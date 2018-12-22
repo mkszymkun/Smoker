@@ -1,6 +1,7 @@
 package com.marek.smoker;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -64,6 +65,19 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
                     update(amountLeft, current_packet.getPacketBrand());
 
 
+                    SharedPreferences statsSmoked = getSharedPreferences("count", 0);
+
+                    int count = statsSmoked.getInt("smoked",0);
+                    count++;
+                    final SharedPreferences.Editor edit = statsSmoked.edit();
+                    edit.putInt("smoked",count);
+                    edit.commit();
+
+                    int smoked = statsSmoked.getInt("smoked", 100);
+                    String text = String.valueOf(smoked);
+
+                    Log.d(TAG, text);
+
                     //get current, add 1, update
 
                     startActivity(new Intent(MainActivity.this, MainActivity.class));
@@ -100,6 +114,22 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
             }
         });
 
+        btn_clrdb = findViewById(R.id.btn_clrsmoked);
+        btn_clrdb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetSmoked();
+            }
+        });
+
+        btn_clrdb = findViewById(R.id.btn_clrmoney);
+        btn_clrdb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetMoney();
+            }
+        });
+
     }
 
     public void onItemSelected(SelectableItem selectableItem) {
@@ -124,5 +154,21 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
 
         PacketDao packetDao = AppDatabase.getDatabase(getApplicationContext()).packetDao();
         packetDao.update(amountLeft, brand);
+    }
+
+    private void resetSmoked() {
+
+        SharedPreferences statsSmoked = getSharedPreferences("count", 0);
+        final SharedPreferences.Editor edit = statsSmoked.edit();
+        edit.putInt("smoked",0);
+        edit.commit();
+    }
+
+    private void resetMoney() {
+
+        SharedPreferences statsMoney = getSharedPreferences("count", 0);
+        final SharedPreferences.Editor edit = statsMoney.edit();
+        edit.putInt("money",0);
+        edit.commit();
     }
 }
