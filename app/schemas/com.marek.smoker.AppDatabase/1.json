@@ -1,0 +1,57 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "256f85bdd84e1ca44d6378de46d22d4c",
+    "entities": [
+      {
+        "tableName": "Packet",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `packet_brand` TEXT, `packet_date` TEXT, `packet_price` TEXT, `packet_available` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "packetBrand",
+            "columnName": "packet_brand",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "packetDate",
+            "columnName": "packet_date",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "packetPrice",
+            "columnName": "packet_price",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "packetAvailable",
+            "columnName": "packet_available",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"256f85bdd84e1ca44d6378de46d22d4c\")"
+    ]
+  }
+}
