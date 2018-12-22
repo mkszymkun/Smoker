@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {Packet.class}, version = 2)
+@Database(entities = {Packet.class}, version = 7)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase INSTANCE;
     private static final String DB_NAME = "packets.db";

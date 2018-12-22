@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "455090aac5d7d6fce72e14f5ec02f63e",
+    "version": 5,
+    "identityHash": "4635cc2bc9b7bec4d3e96b8784f67b7b",
     "entities": [
       {
         "tableName": "Packet",
@@ -47,11 +47,49 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Statistics",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`stats_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `stats_smoked` TEXT, `stats_name` TEXT, `stats_money` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "stats_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statsSmoked",
+            "columnName": "stats_smoked",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "stats_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "statsMoney",
+            "columnName": "stats_money",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "stats_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"455090aac5d7d6fce72e14f5ec02f63e\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"4635cc2bc9b7bec4d3e96b8784f67b7b\")"
     ]
   }
 }

@@ -11,10 +11,70 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="109dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="133dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Smoked:"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/stats_smoked"
+        android:layout_width="133dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Smoked:"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/stats_money"
+        android:layout_width="133dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Smoked:"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/stats_smoked" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="133dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Smoked:"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="188dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Money spent:"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 </android.support.constraint.ConstraintLayout>

@@ -17,4 +17,11 @@ public interface PacketDao {
 
     @Query("DELETE FROM Packet")
     void deleteAll();
+
+    @Query("UPDATE Packet SET packet_available=:amount WHERE packet_brand = :brand")
+    void update(String amount, String brand);
+
+    @Query("DELETE FROM Packet WHERE packet_brand = :brand")
+    void deletePacket(String brand);
+
 }

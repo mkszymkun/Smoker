@@ -1,6 +1,7 @@
 package com.marek.smoker;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,17 +12,20 @@ import android.widget.Button;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  implements SelectableViewHolder.OnItemSelectedListener{
 
     private static final String TAG = "MainActivity";
 
+//    RecyclerView recyclerView;
+//    RecyclerView.Adapter adapter;
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
+    SelectableAdapter adapter;
 
     Button btn_add;
     Button btn_list;
     Button btn_clrdb;
     Button btn_smoke;
+    Packet current_packet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +37,40 @@ public class MainActivity extends AppCompatActivity {
         PacketDao packetDao = AppDatabase.getDatabase(getApplicationContext()).packetDao();
         List<Packet> packets = packetDao.getAllEvents();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new PacketAdapter(packets);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        adapter = new PacketAdapter(packets);
+//        recyclerView.setAdapter(adapter);
+
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView = findViewById(R.id.selection_list);
+        recyclerView.setLayoutManager(layoutManager);
+        List<Packet> selectableItems = packetDao.getAllEvents();
+        adapter = new SelectableAdapter(this, selectableItems,false);
         recyclerView.setAdapter(adapter);
 
         btn_add = findViewById(R.id.btn_smoke);
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onCLick: smoked!");
-                startActivity(new Intent(MainActivity.this, AddPacket.class));
+
+                if (current_packet != null) {
+                    Log.d(TAG, "onCLick: smoked!");
+                    String amountLeft = String.valueOf(Integer.parseInt(current_packet.getPacketAvailable()) - 1);
+
+                    if (Integer.parseInt(amountLeft) <= 0) {
+                        deletePacket(current_packet.getPacketBrand());
+                    }
+                    update(amountLeft, current_packet.getPacketBrand());
+
+
+                    //get current, add 1, update
+
+                    startActivity(new Intent(MainActivity.this, MainActivity.class));
+                }
+                else {
+                    Snackbar.make(recyclerView, "Choose a packet", Snackbar.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -74,9 +102,27 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onItemSelected(SelectableItem selectableItem) {
+
+        List<Packet> selectedItems = adapter.getSelectedItems();
+        current_packet = selectableItem;
+    }
+
     private void deleteAll() {
 
         PacketDao packetDao = AppDatabase.getDatabase(getApplicationContext()).packetDao();
         packetDao.deleteAll();
+    }
+
+    private void deletePacket(String brand) {
+
+        PacketDao packetDao = AppDatabase.getDatabase(getApplicationContext()).packetDao();
+        packetDao.deletePacket(brand);
+    }
+
+    private void update(String amountLeft, String brand) {
+
+        PacketDao packetDao = AppDatabase.getDatabase(getApplicationContext()).packetDao();
+        packetDao.update(amountLeft, brand);
     }
 }

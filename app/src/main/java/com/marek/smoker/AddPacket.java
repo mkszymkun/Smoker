@@ -40,6 +40,9 @@ public class AddPacket extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: eventName: " + packetName.getText().toString());
                 saveEvent();
+
+                //get current, add price, update
+
                 startActivity(new Intent(AddPacket.this, MainActivity.class));
             }
         });

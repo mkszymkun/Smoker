@@ -1,6 +1,5 @@
 package com.marek.smoker;
 
-
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
@@ -8,6 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity
 public class Packet {
 
+    @ColumnInfo(name = "packet_id")
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -68,5 +68,17 @@ public class Packet {
 
     public void setPacketAvailable(String packetAvailable) {
         this.packetAvailable = packetAvailable;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
+
+        Packet packetCompare = (Packet) obj;
+        if(packetCompare.getPacketBrand().equals(this.getPacketBrand()))
+            return true;
+
+        return false;
     }
 }
