@@ -10,27 +10,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.marek.smoker.ListPacketsActivity"
+            android:name=".ListPacketsActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name="com.marek.smoker.ListDailyInfoActivity"
+            android:name=".ListDailyInfoActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-        <activity android:name="com.marek.smoker.AddPacket" />
-        <activity android:name="com.marek.smoker.MainActivity">
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".AddPacket" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".UtilitiesActivity"
+            android:label="@string/title_activity_utilities"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

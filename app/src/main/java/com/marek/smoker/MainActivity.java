@@ -20,8 +20,6 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
 
     private static final String TAG = "MainActivity";
 
-//    RecyclerView recyclerView;
-//    RecyclerView.Adapter adapter;
     RecyclerView recyclerView;
     SelectableAdapter adapter;
 
@@ -30,7 +28,6 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
     Button btn_clrdb;
     Button btn_smoke;
     Button btn_stats;
-    Button btn_stats_add;
     Packet current_packet;
 
     @Override
@@ -42,11 +39,6 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
 
         PacketDao packetDao = AppDatabase.getDatabase(getApplicationContext()).packetDao();
         List<Packet> packets = packetDao.getAllEvents();
-
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        adapter = new PacketAdapter(packets);
-//        recyclerView.setAdapter(adapter);
-
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView = findViewById(R.id.selection_list);
@@ -132,68 +124,19 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
             }
         });
 
-        btn_stats_add = findViewById(R.id.btn_stats_add);
-        btn_stats_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetDate();
-                startActivity(new Intent(MainActivity.this, MainActivity.class));
-            }
-        });
-
         btn_clrdb = findViewById(R.id.btn_clrdb);
         btn_clrdb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteAll();
-                startActivity(new Intent(MainActivity.this, MainActivity.class));
+                startActivity(new Intent(MainActivity.this, UtilitiesActivity.class));
             }
         });
-
-        btn_clrdb = findViewById(R.id.btn_clrsmoked);
-        btn_clrdb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetSmoked();
-            }
-        });
-
-        btn_clrdb = findViewById(R.id.btn_clrmoney);
-        btn_clrdb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetMoney();
-            }
-        });
-
     }
 
     public void onItemSelected(SelectableItem selectableItem) {
 
         List<Packet> selectedItems = adapter.getSelectedItems();
         current_packet = selectableItem;
-    }
-
-    private void deleteAll() {
-
-        PacketDao packetDao = AppDatabase.getDatabase(getApplicationContext()).packetDao();
-        packetDao.deleteAll();
-    }
-
-    private void resetDate() {
-
-        DailyInfoDao dailyInfoDao = AppDatabase.getDatabase(getApplicationContext()).dailyInfoDao();
-        dailyInfoDao.deleteAll();
-
-        SharedPreferences firstDate = getSharedPreferences("count", 0);
-        final SharedPreferences.Editor edit = firstDate.edit();
-        edit.putInt("last_date", 0);
-        edit.commit();
-
-        SharedPreferences daynum = getSharedPreferences("count", 0);
-        final SharedPreferences.Editor edit2 = daynum.edit();
-        edit2.putInt("day", 0);
-        edit2.commit();
     }
 
     private void deletePacket(String brand) {
@@ -206,22 +149,6 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
 
         PacketDao packetDao = AppDatabase.getDatabase(getApplicationContext()).packetDao();
         packetDao.update(amountLeft, brand);
-    }
-
-    private void resetSmoked() {
-
-        SharedPreferences statsSmoked = getSharedPreferences("count", 0);
-        final SharedPreferences.Editor edit = statsSmoked.edit();
-        edit.putInt("smoked",0);
-        edit.commit();
-    }
-
-    private void resetMoney() {
-
-        SharedPreferences statsMoney = getSharedPreferences("count", 0);
-        final SharedPreferences.Editor edit = statsMoney.edit();
-        edit.putInt("money",0);
-        edit.commit();
     }
 
     private int getDate() {
