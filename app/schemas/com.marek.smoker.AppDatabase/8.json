@@ -1,0 +1,101 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 8,
+    "identityHash": "c11ba90b3e12e67639774df8af709208",
+    "entities": [
+      {
+        "tableName": "Packet",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`packet_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `packet_brand` TEXT, `packet_date` TEXT, `packet_price` TEXT, `packet_available` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "packet_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "packetBrand",
+            "columnName": "packet_brand",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "packetDate",
+            "columnName": "packet_date",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "packetPrice",
+            "columnName": "packet_price",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "packetAvailable",
+            "columnName": "packet_available",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "packet_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "DailyInfo",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`daily_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `daily_amount` TEXT, `daily_money` TEXT, `daily_day` TEXT, `daily_date` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "daily_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dailyAmount",
+            "columnName": "daily_amount",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dailyMoney",
+            "columnName": "daily_money",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dailyDay",
+            "columnName": "daily_day",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dailyDate",
+            "columnName": "daily_date",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "daily_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c11ba90b3e12e67639774df8af709208\")"
+    ]
+  }
+}

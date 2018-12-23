@@ -19,7 +19,7 @@
         android:text="Add packet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_view" />
+        app:layout_constraintTop_toBottomOf="@+id/selection_list" />
 
     <Button
         android:id="@+id/btn_clrdb"
@@ -79,6 +79,31 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_add" />
 
     <Button
+        android:id="@+id/btn_stats"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Daily info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_list" />
+
+    <Button
+        android:id="@+id/btn_stats_add"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="CLR INFO"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_stats"
+        app:layout_constraintTop_toBottomOf="@+id/btn_list" />
+
+    <Button
         android:id="@+id/btn_smoke"
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -106,18 +131,5 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_smoke">
 
     </android.support.v7.widget.RecyclerView>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="0dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selection_list" />
 
 </android.support.constraint.ConstraintLayout>

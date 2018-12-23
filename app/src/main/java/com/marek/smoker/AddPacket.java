@@ -62,5 +62,34 @@ public class AddPacket extends AppCompatActivity {
         final SharedPreferences.Editor edit = statsMoney.edit();
         edit.putInt("money",count);
         edit.commit();
+
+        String news = getMoney();
+        Log.d(TAG, news);
+
+        String incremented = String.valueOf(Integer.parseInt(news) + Integer.parseInt(packetPrice.getText().toString()));
+        String day = String.valueOf(getLastDay());
+
+        updateMoney(incremented, day);
+    }
+
+
+    private void updateMoney(String money, String day) {
+
+        DailyInfoDao dailyInfoDao = AppDatabase.getDatabase(getApplicationContext()).dailyInfoDao();
+        dailyInfoDao.updateMoney(money, day);
+    }
+
+    private String getMoney() {
+
+        String day = String.valueOf(getLastDay());
+        DailyInfoDao dailyInfoDao = AppDatabase.getDatabase(getApplicationContext()).dailyInfoDao();
+        return dailyInfoDao.getMoney(day);
+    }
+
+    private int getLastDay() {
+
+        SharedPreferences firstDate = getSharedPreferences("count", 0);
+        return firstDate.getInt("day", 0);
+
     }
 }

@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity  implements SelectableViewHolder.OnItemSelectedListener{
@@ -26,6 +29,8 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
     Button btn_list;
     Button btn_clrdb;
     Button btn_smoke;
+    Button btn_stats;
+    Button btn_stats_add;
     Packet current_packet;
 
     @Override
@@ -49,6 +54,8 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
         List<Packet> selectableItems = packetDao.getAllEvents();
         adapter = new SelectableAdapter(this, selectableItems,false);
         recyclerView.setAdapter(adapter);
+
+        compareDate();
 
         btn_add = findViewById(R.id.btn_smoke);
         btn_add.setOnClickListener(new View.OnClickListener() {
@@ -76,9 +83,19 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
                     int smoked = statsSmoked.getInt("smoked", 100);
                     String text = String.valueOf(smoked);
 
+                    getAmount();
+
                     Log.d(TAG, text);
 
+                    String news = getAmount();
+                    Log.d(TAG, news);
+
+                    String incremented = String.valueOf(Integer.parseInt(news) + 1);
+                    String day = String.valueOf(getLastDay());
+
                     //get current, add 1, update
+
+                    updateAmount(incremented, day);
 
                     startActivity(new Intent(MainActivity.this, MainActivity.class));
                 }
@@ -103,6 +120,24 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
             public void onClick(View v) {
                 Log.d(TAG, "onCLick: pressed!");
                 startActivity(new Intent(MainActivity.this, ListPacketsActivity.class));
+            }
+        });
+
+        btn_stats = findViewById(R.id.btn_stats);
+        btn_stats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onCLick: pressed!");
+                startActivity(new Intent(MainActivity.this, ListDailyInfoActivity.class));
+            }
+        });
+
+        btn_stats_add = findViewById(R.id.btn_stats_add);
+        btn_stats_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetDate();
+                startActivity(new Intent(MainActivity.this, MainActivity.class));
             }
         });
 
@@ -145,6 +180,22 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
         packetDao.deleteAll();
     }
 
+    private void resetDate() {
+
+        DailyInfoDao dailyInfoDao = AppDatabase.getDatabase(getApplicationContext()).dailyInfoDao();
+        dailyInfoDao.deleteAll();
+
+        SharedPreferences firstDate = getSharedPreferences("count", 0);
+        final SharedPreferences.Editor edit = firstDate.edit();
+        edit.putInt("last_date", 0);
+        edit.commit();
+
+        SharedPreferences daynum = getSharedPreferences("count", 0);
+        final SharedPreferences.Editor edit2 = daynum.edit();
+        edit2.putInt("day", 0);
+        edit2.commit();
+    }
+
     private void deletePacket(String brand) {
 
         PacketDao packetDao = AppDatabase.getDatabase(getApplicationContext()).packetDao();
@@ -172,4 +223,89 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
         edit.putInt("money",0);
         edit.commit();
     }
+
+    private int getDate() {
+
+        DateFormat year = new SimpleDateFormat("YYYY");
+        String year_str = year.format(Calendar.getInstance().getTime());
+        int year_int = Integer.parseInt(year_str);
+
+        DateFormat month = new SimpleDateFormat("MM");
+        String month_str = month.format(Calendar.getInstance().getTime());
+        int month_int = Integer.parseInt(month_str);
+
+
+        DateFormat day = new SimpleDateFormat("dd");
+        String day_str = day.format(Calendar.getInstance().getTime());
+        int day_int = Integer.parseInt(day_str);
+
+        int current_date = year_int*10000+month_int*100+day_int;
+
+        return current_date;
+    }
+
+    private void updateAmount(String amount, String day) {
+
+        DailyInfoDao dailyInfoDao = AppDatabase.getDatabase(getApplicationContext()).dailyInfoDao();
+        dailyInfoDao.updateAmount(amount, day);
+    }
+
+    private String getAmount() {
+
+        String day = String.valueOf(getLastDay());
+        DailyInfoDao dailyInfoDao = AppDatabase.getDatabase(getApplicationContext()).dailyInfoDao();
+        return dailyInfoDao.getAmount(day);
+    }
+
+    private int getLastDate() {
+
+        SharedPreferences firstDate = getSharedPreferences("count", 0);
+        int day = firstDate.getInt("day", 0);
+            return firstDate.getInt("last_date", 0);
+
+    }
+
+    private int getLastDay() {
+
+        SharedPreferences firstDate = getSharedPreferences("count", 0);
+        return firstDate.getInt("day", 0);
+
+    }
+
+    private void compareDate() {
+        int last = getLastDate();
+        int current = getDate();
+        if (current > last) {
+            changeLastDate();
+            changeLastDay();
+
+            String date = String.valueOf(getLastDate());
+            String day = String.valueOf(getLastDay());
+
+            DailyInfo dailyInfo = new DailyInfo(date, day, "0", "0");
+            DailyInfoDao dailyInfoDao = AppDatabase.getDatabase(getApplicationContext()).dailyInfoDao();
+            dailyInfoDao.insertAll(dailyInfo);
+
+        }
+    }
+
+    private void changeLastDate() {
+
+        SharedPreferences firstDate = getSharedPreferences("count", 0);
+        final SharedPreferences.Editor edit = firstDate.edit();
+        int date = getDate();
+        edit.putInt("last_date", date);
+        edit.commit();
+    }
+
+    private void changeLastDay() {
+
+        SharedPreferences daynum = getSharedPreferences("count", 0);
+        final SharedPreferences.Editor edit = daynum.edit();
+        int day = daynum.getInt("day", 0) + 1;
+        edit.putInt("day", day);
+        edit.commit();
+    }
+
+
 }
