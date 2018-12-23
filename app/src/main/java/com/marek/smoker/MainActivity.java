@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -49,8 +50,8 @@ public class MainActivity extends AppCompatActivity  implements SelectableViewHo
 
         compareDate();
 
-        btn_add = findViewById(R.id.btn_smoke);
-        btn_add.setOnClickListener(new View.OnClickListener() {
+        btn_smoke = findViewById(R.id.btn_smoke);
+        btn_smoke.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
